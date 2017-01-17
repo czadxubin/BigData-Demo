@@ -21,14 +21,17 @@
 ```
 ### 需求
 ###### 1.根据不同的区段号码分类统计出用户的上行流量、下行流量、总流量的使用情况
-###### 2.分类统计不同用户的上行流量、下行流量、总流量。输出结果根据上行流量、下行流量、总流量三个文件进行输出
+###### 2.根据总流量降序排序
 
 *****************************
 主要知识点：
 - 如何划分分区输出（指定不同的part）
- - 实现自定义的  <code>org.apache.hadoop.mapreduce.Partitioner<KEY, VALUE></code>
- 
+ - 继承自定义的  <code>org.apache.hadoop.mapreduce.Partitioner<KEY, VALUE></code>
 - 自定的对象如何在mapper和reducer间传递
+ - 实现接口<code>org.apache.hadoop.io.Writable</code>
+- 根据总流量降序排序
+ - 实现接口<code>org.apache.hadoop.io.WritableComparable</code>
+ 
 
 ### *大坑，小心*
 - 自定义MappReduce序列化的javaBean需要有一个无惨构造器，否则报错

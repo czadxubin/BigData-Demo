@@ -3,10 +3,9 @@ package com.xbz.bigdata.demo.flowsum;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import org.apache.hadoop.io.WritableComparable;
 
-import org.apache.hadoop.io.Writable;
-
-public class FlowBean implements Writable{
+public class FlowBean implements WritableComparable<FlowBean>{
 	/**上行流量**/
 	private Long uploadFlow;
 	/**下行流量**/
@@ -65,5 +64,9 @@ public class FlowBean implements Writable{
 		this.uploadFlow+=other.getUploadFlow();
 		this.sumFlow=uploadFlow+dFlow;
 		return this;
+	}
+	@Override
+	public int compareTo(FlowBean o) {
+		return (int) (o.getSumFlow()-this.sumFlow);
 	}
 }
