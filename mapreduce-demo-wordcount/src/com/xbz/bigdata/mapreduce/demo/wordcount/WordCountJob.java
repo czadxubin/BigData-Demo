@@ -1,6 +1,7 @@
 package com.xbz.bigdata.mapreduce.demo.wordcount;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -39,6 +40,11 @@ public class WordCountJob {
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
+		
+		// 设置Combiner减少mapper到reducer的输入
+		job.setCombinerClass(WordCountReducer.class);
+		
+		
 		/* 
 		 * 指定输入路径|输出路径
 		 * API似乎有变化
@@ -47,8 +53,17 @@ public class WordCountJob {
 		 * job.setOutputPath(new Path(args[1]));
 		 * 当前版本
 		 */
-		TextInputFormat.setInputPaths(job, new Path(args[0]));
-		TextOutputFormat.setOutputPath(job, new Path(args[1]));
+		Path inPath = new Path(args[0]);
+		Path outpath = new Path(args[1]);
+		TextInputFormat.setInputPaths(job, inPath);
+		
+		//调试时使用
+		FileSystem fs = FileSystem.newInstance(conf);
+		if(fs.exists(outpath)){
+			fs.delete(outpath, true);
+		}
+
+		TextOutputFormat.setOutputPath(job, outpath);
 		
 		// 提交任务，等待任务处理完成退出
 		// 执行成功返回0，失败返回1。可用于检查运行状态

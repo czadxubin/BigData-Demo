@@ -24,8 +24,7 @@ public class WordCountReducer  extends Reducer<Text, IntWritable, Text, IntWrita
 		//统计单词数量
 		Iterator<IntWritable> iterator = valuesIterator.iterator();
 		while(iterator.hasNext()){
-			iterator.next();
-			count++;
+			count+=iterator.next().get();
 		}
 //		for (IntWritable valueInterator : valuesIterator) {
 //			count++;
