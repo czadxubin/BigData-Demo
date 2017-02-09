@@ -34,3 +34,26 @@ A-D:C,B,
 B-C:H,D,A,
 B-D:A,
 C-D:A,
+=================================
+A:B,C,D,G
+B:A,G,D,H
+C:A,H,D,L
+D:B,A,C,M
+L:B,Y,X,A
+互为好友
+step one
+====
+A-B:A-B
+A-C:A-C
+A-D:A-D
+A-G:A-G
+A-B:B-A
+B-G:B-G
+B-D:B-D
+B-H:B-H
+
+step two
+====
+
+
+
